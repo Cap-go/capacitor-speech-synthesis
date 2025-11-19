@@ -1,0 +1,10 @@
+{
+  "appId": "app.capgo.speechsynthesis",
+  "appName": "Speech Synthesis Example",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}
