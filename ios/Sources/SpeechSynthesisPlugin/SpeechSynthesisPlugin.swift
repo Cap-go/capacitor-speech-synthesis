@@ -7,7 +7,7 @@ import AVFoundation
  */
 @objc(SpeechSynthesisPlugin)
 public class SpeechSynthesisPlugin: CAPPlugin, CAPBridgedPlugin, AVSpeechSynthesizerDelegate {
-    private let pluginVersion: String = "7.0.2"
+    private let pluginVersion: String = "7.0.3"
     public let identifier = "SpeechSynthesisPlugin"
     public let jsName = "SpeechSynthesis"
     public let pluginMethods: [CAPPluginMethod] = [
