@@ -23,7 +23,7 @@ import org.json.JSONException;
 @CapacitorPlugin(name = "SpeechSynthesis")
 public class SpeechSynthesisPlugin extends Plugin {
 
-    private final String pluginVersion = "7.0.3";
+    private final String pluginVersion = "8.0.1";
     private TextToSpeech tts;
     private int utteranceIdCounter = 0;
     private boolean ttsInitialized = false;
