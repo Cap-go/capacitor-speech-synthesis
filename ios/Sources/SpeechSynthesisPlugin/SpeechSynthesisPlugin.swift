@@ -122,32 +122,28 @@ public class SpeechSynthesisPlugin: CAPPlugin, CAPBridgedPlugin, AVSpeechSynthes
         }
 
         // Write to file
-        if #available(iOS 13.0, *) {
-            let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let audioFilename = documentsPath.appendingPathComponent("\(utteranceId).caf")
+        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let audioFilename = documentsPath.appendingPathComponent("\(utteranceId).caf")
 
-            synthesizer?.write(utterance) { (buffer: AVAudioBuffer) in
-                guard let pcmBuffer = buffer as? AVAudioPCMBuffer else {
-                    call.reject("Failed to get PCM buffer")
-                    return
-                }
-
-                if let audioFile = try? AVAudioFile(forWriting: audioFilename, settings: pcmBuffer.format.settings) {
-                    do {
-                        try audioFile.write(from: pcmBuffer)
-                        call.resolve([
-                            "filePath": audioFilename.path,
-                            "utteranceId": utteranceId
-                        ])
-                    } catch {
-                        call.reject("Failed to write audio file: \(error.localizedDescription)")
-                    }
-                } else {
-                    call.reject("Failed to create audio file")
-                }
+        synthesizer?.write(utterance) { (buffer: AVAudioBuffer) in
+            guard let pcmBuffer = buffer as? AVAudioPCMBuffer else {
+                call.reject("Failed to get PCM buffer")
+                return
             }
-        } else {
-            call.reject("synthesizeToFile requires iOS 13.0 or later")
+
+            if let audioFile = try? AVAudioFile(forWriting: audioFilename, settings: pcmBuffer.format.settings) {
+                do {
+                    try audioFile.write(from: pcmBuffer)
+                    call.resolve([
+                        "filePath": audioFilename.path,
+                        "utteranceId": utteranceId
+                    ])
+                } catch {
+                    call.reject("Failed to write audio file: \(error.localizedDescription)")
+                }
+            } else {
+                call.reject("Failed to create audio file")
+            }
         }
     }
 
@@ -189,24 +185,20 @@ public class SpeechSynthesisPlugin: CAPPlugin, CAPBridgedPlugin, AVSpeechSynthes
                 "language": voice.language
             ]
 
-            // Add gender if available
-            if #available(iOS 13.0, *) {
-                switch voice.gender {
-                case .male:
-                    info["gender"] = "male"
-                case .female:
-                    info["gender"] = "female"
-                default:
-                    info["gender"] = "neutral"
-                }
+            // Add gender
+            switch voice.gender {
+            case .male:
+                info["gender"] = "male"
+            case .female:
+                info["gender"] = "female"
+            default:
+                info["gender"] = "neutral"
             }
 
             // Add network requirement
-            if #available(iOS 13.0, *) {
-                // Higher quality voices (enhanced/premium) typically don't require network
-                // Default quality = 1, Enhanced quality = 2
-                info["isNetworkConnectionRequired"] = voice.quality.rawValue < 2
-            }
+            // Higher quality voices (enhanced/premium) typically don't require network
+            // Default quality = 1, Enhanced quality = 2
+            info["isNetworkConnectionRequired"] = voice.quality.rawValue < 2
 
             return info
         }
