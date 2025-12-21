@@ -1,6 +1,5 @@
 package ee.forgr.plugin.speechsynthesis;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
@@ -13,7 +12,6 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -129,7 +127,7 @@ public class SpeechSynthesisPlugin extends Plugin {
         String language = call.getString("language");
         String voiceId = call.getString("voiceId");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && voiceId != null) {
+        if (voiceId != null) {
             Voice voice = findVoiceById(voiceId);
             if (voice != null) {
                 tts.setVoice(voice);
@@ -159,16 +157,7 @@ public class SpeechSynthesisPlugin extends Plugin {
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
 
         // Speak
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tts.speak(text, queueMode, params, utteranceId);
-        } else {
-            HashMap<String, String> paramsMap = new HashMap<>();
-            paramsMap.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
-            if (volume != null) {
-                paramsMap.put(TextToSpeech.Engine.KEY_PARAM_VOLUME, String.valueOf(volume));
-            }
-            tts.speak(text, queueMode, paramsMap);
-        }
+        tts.speak(text, queueMode, params, utteranceId);
 
         JSObject result = new JSObject();
         result.put("utteranceId", utteranceId);
@@ -194,7 +183,7 @@ public class SpeechSynthesisPlugin extends Plugin {
         String language = call.getString("language");
         String voiceId = call.getString("voiceId");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && voiceId != null) {
+        if (voiceId != null) {
             Voice voice = findVoiceById(voiceId);
             if (voice != null) {
                 tts.setVoice(voice);
@@ -215,34 +204,18 @@ public class SpeechSynthesisPlugin extends Plugin {
         File outputFile = new File(getContext().getFilesDir(), utteranceId + ".wav");
 
         // Synthesize to file
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Bundle params = new Bundle();
-            params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
+        Bundle params = new Bundle();
+        params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
 
-            int result = tts.synthesizeToFile(text, params, outputFile, utteranceId);
+        int result = tts.synthesizeToFile(text, params, outputFile, utteranceId);
 
-            if (result == TextToSpeech.SUCCESS) {
-                JSObject response = new JSObject();
-                response.put("filePath", outputFile.getAbsolutePath());
-                response.put("utteranceId", utteranceId);
-                call.resolve(response);
-            } else {
-                call.reject("Failed to synthesize to file");
-            }
+        if (result == TextToSpeech.SUCCESS) {
+            JSObject response = new JSObject();
+            response.put("filePath", outputFile.getAbsolutePath());
+            response.put("utteranceId", utteranceId);
+            call.resolve(response);
         } else {
-            HashMap<String, String> params = new HashMap<>();
-            params.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId);
-
-            int result = tts.synthesizeToFile(text, params, outputFile.getAbsolutePath());
-
-            if (result == TextToSpeech.SUCCESS) {
-                JSObject response = new JSObject();
-                response.put("filePath", outputFile.getAbsolutePath());
-                response.put("utteranceId", utteranceId);
-                call.resolve(response);
-            } else {
-                call.reject("Failed to synthesize to file");
-            }
+            call.reject("Failed to synthesize to file");
         }
     }
 
@@ -289,7 +262,7 @@ public class SpeechSynthesisPlugin extends Plugin {
     public void getVoices(PluginCall call) {
         JSArray voicesArray = new JSArray();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && tts != null) {
+        if (tts != null) {
             Set<Voice> voices = tts.getVoices();
             if (voices != null) {
                 for (Voice voice : voices) {
@@ -299,19 +272,6 @@ public class SpeechSynthesisPlugin extends Plugin {
                     voiceInfo.put("language", voice.getLocale().toLanguageTag());
                     voiceInfo.put("isNetworkConnectionRequired", voice.isNetworkConnectionRequired());
 
-                    voicesArray.put(voiceInfo);
-                }
-            }
-        } else {
-            // Fallback for older Android versions
-            Locale[] locales = Locale.getAvailableLocales();
-            for (Locale locale : locales) {
-                if (tts != null && tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-                    JSObject voiceInfo = new JSObject();
-                    String tag = locale.toLanguageTag();
-                    voiceInfo.put("id", tag);
-                    voiceInfo.put("name", locale.getDisplayName());
-                    voiceInfo.put("language", tag);
                     voicesArray.put(voiceInfo);
                 }
             }
@@ -326,19 +286,11 @@ public class SpeechSynthesisPlugin extends Plugin {
     public void getLanguages(PluginCall call) {
         Set<String> languageSet = new HashSet<>();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && tts != null) {
+        if (tts != null) {
             Set<Voice> voices = tts.getVoices();
             if (voices != null) {
                 for (Voice voice : voices) {
                     languageSet.add(voice.getLocale().toLanguageTag());
-                }
-            }
-        } else {
-            // Fallback for older Android versions
-            Locale[] locales = Locale.getAvailableLocales();
-            for (Locale locale : locales) {
-                if (tts != null && tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) {
-                    languageSet.add(locale.toLanguageTag());
                 }
             }
         }
@@ -375,11 +327,7 @@ public class SpeechSynthesisPlugin extends Plugin {
             return;
         }
 
-        boolean isAvailable = false;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Voice voice = findVoiceById(voiceId);
-            isAvailable = voice != null;
-        }
+        boolean isAvailable = findVoiceById(voiceId) != null;
 
         JSObject result = new JSObject();
         result.put("isAvailable", isAvailable);
@@ -414,7 +362,7 @@ public class SpeechSynthesisPlugin extends Plugin {
     }
 
     private Voice findVoiceById(String voiceId) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && tts != null) {
+        if (tts != null) {
             Set<Voice> voices = tts.getVoices();
             if (voices != null) {
                 for (Voice voice : voices) {
