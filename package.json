@@ -1,6 +1,6 @@
 {
   "name": "@capgo/capacitor-speech-synthesis",
-  "version": "8.0.5",
+  "version": "8.0.6",
   "description": "Synthesize speech from text with full control over language, voice, pitch, rate, and volume.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
