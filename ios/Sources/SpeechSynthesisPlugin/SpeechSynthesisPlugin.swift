@@ -80,10 +80,6 @@ public class SpeechSynthesisPlugin: CAPPlugin, CAPBridgedPlugin, AVSpeechSynthes
 
         utteranceMap[utteranceId] = utterance
 
-        // Store utteranceId in userData for delegate callbacks
-        let userInfo: [String: Any] = ["utteranceId": utteranceId]
-        setValue(userInfo, forKey: "currentUtteranceId")
-
         synthesizer?.speak(utterance)
 
         call.resolve([
