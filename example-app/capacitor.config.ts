@@ -4,7 +4,7 @@ import pkg from './package.json';
 
 const config: CapacitorConfig = {
   appId: 'app.capgo.speechsynthesis',
-  appName: 'Speech Synthesis Example',
+  appName: '@capgo/capacitor-speech-synthesis',
   webDir: 'dist',
   plugins: {
     SplashScreen: {
