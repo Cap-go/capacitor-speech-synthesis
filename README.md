@@ -18,7 +18,7 @@ Read text aloud in your Capacitor app with native text-to-speech, and control th
 ## Key features
 
 - **Speak**: `speak()` with language, voice, pitch, rate, volume and queue strategy.
-- **Playback control**: `pause()`, `resume()`, `cancel()` and `isSpeaking()`.
+- **Playback control**: `pause()`, `resume()`, `cancel()` and `isSpeaking()`. Pause and resume are not supported on Android.
 - **Voices and languages**: `getVoices()`, `getLanguages()`, `isLanguageAvailable()` and `isVoiceAvailable()`.
 - **Save to file**: `synthesizeToFile()` writes speech to an audio file on iOS and Android.
 - **Events**: `start`, `end`, `boundary` and `error` listeners.
