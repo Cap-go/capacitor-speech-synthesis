@@ -1,12 +1,28 @@
 # @capgo/capacitor-speech-synthesis
-<a href="https://capgo.app/"><img src="https://capgo.app/readme-banner.svg?repo=Cap-go/capacitor-speech-synthesis" alt="Capgo - Instant updates for Capacitor" /></a>
+
+Read text aloud in your Capacitor app with native text-to-speech, and control the language, voice, pitch, rate and volume.
+
+<a href="https://capgo.app/?ref=plugin_speech_synthesis"><img src="https://capgo.app/readme-banner.svg?repo=Cap-go/capacitor-speech-synthesis" alt="Capgo - Instant updates for Capacitor" /></a>
 
 <div align="center">
-  <h2><a href="https://capgo.app/?ref=plugin"> ➡️ Get Instant updates for your App with Capgo</a></h2>
-  <h2><a href="https://capgo.app/consulting/?ref=plugin"> Missing a feature? We'll build the plugin for you 💪</a></h2>
+  <p><b>Capgo</b>: open-source live updates for Ionic and Capacitor apps. Ship OTA fixes and features instantly, without waiting for app store review.</p>
+  <h2><a href="https://capgo.app/register/?ref=plugin_speech_synthesis">➡️ Get started for free</a></h2>
+  <p>14-day unlimited free trial. No credit card required</p>
+  <p><a href="https://capgo.app/consulting/?ref=plugin_speech_synthesis">Missing a feature? We'll build the plugin for you 💪</a></p>
 </div>
 
-Synthesize speech from text with full control over language, voice, pitch, rate, and volume.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Cap-go/capacitor-speech-synthesis/main/assets/github-social-preview.png" alt="@capgo/capacitor-speech-synthesis for Capacitor apps" width="300" />
+</p>
+
+## Key features
+
+- **Speak**: `speak()` with language, voice, pitch, rate, volume and queue strategy.
+- **Playback control**: `pause()`, `resume()`, `cancel()` and `isSpeaking()`.
+- **Voices and languages**: `getVoices()`, `getLanguages()`, `isLanguageAvailable()` and `isVoiceAvailable()`.
+- **Save to file**: `synthesizeToFile()` writes speech to an audio file on iOS and Android.
+- **Events**: `start`, `end`, `boundary` and `error` listeners.
+- **Platforms**: iOS, Android and Web. iOS uses AVSpeechSynthesizer, Android uses TextToSpeech. Web uses the Web Speech API.
 
 ## Why Speech Synthesis?
 
