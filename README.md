@@ -2,7 +2,7 @@
 
 Read text aloud in your Capacitor app with native text-to-speech, and control the language, voice, pitch, rate and volume.
 
-<a href="https://capgo.app/?ref=plugin_speech_synthesis"><img src="https://capgo.app/readme-banner.svg?repo=Cap-go/capacitor-speech-synthesis" alt="Capgo - Instant updates for Capacitor" /></a>
+<a href="https://capgo.app/?ref=plugin_speech_synthesis"><img src="https://capgo.app/readme-banner.svg?repo=Cap-go/capacitor-speech-synthesis" alt="Capgo - Build Capacitor apps with AI, ship updates instantly" /></a>
 
 <div align="center">
   <p><b>Capgo</b>: push fixes to your Capacitor users in minutes, build signed iOS and Android apps without a Mac, and roll back in one click.</p>
@@ -10,6 +10,8 @@ Read text aloud in your Capacitor app with native text-to-speech, and control th
   <p>14-day unlimited free trial. No credit card required</p>
   <p><a href="https://capgo.app/consulting/?ref=plugin_speech_synthesis">Missing a feature? We'll build the plugin for you 💪</a></p>
 </div>
+
+> 🤖 **Building with an AI coding agent?** Install [Capgo skills](https://capgo.app/skills/?ref=plugin_speech_synthesis) so Claude Code, Codex, Cursor, Copilot, or Gemini CLI know how to install and use `@capgo/capacitor-speech-synthesis` in your Capacitor app: `npx skills add Cap-go/capgo-skills`. Then ask your agent: *"Add @capgo/capacitor-speech-synthesis to my Capacitor app and wire it up."* [Agent setup guides](https://capgo.app/agents/?ref=plugin_speech_synthesis) · [Hosted MCP](https://capgo.app/docs/ai/mcp/?ref=plugin_speech_synthesis)
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Cap-go/capacitor-speech-synthesis/main/assets/github-social-preview.png" alt="@capgo/capacitor-speech-synthesis for Capacitor apps" width="300" />
